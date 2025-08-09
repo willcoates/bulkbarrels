@@ -38,7 +38,7 @@ public class BulkBarrelBlockEntityTest {
         var stack = new ItemStack(Items.DIAMOND, 32);
         entity.setItem(0, stack);
 
-        assertEquals(stack, entity.getItem(0));
+        assertItemStackMatches(stack, entity.getItem(0));
     }
 
     @Test
@@ -77,7 +77,7 @@ public class BulkBarrelBlockEntityTest {
 
         entity.setItem(1, new ItemStack(Items.DIAMOND, 1));
 
-        assertEquals(ItemStack.EMPTY, entity.getItem(1));
+        assertItemStackMatches(ItemStack.EMPTY, entity.getItem(1));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class BulkBarrelBlockEntityTest {
 
         entity.setItem(1, ItemStack.EMPTY);
 
-        assertEquals(ItemStack.EMPTY, entity.getItem(1));
+        assertItemStackMatches(ItemStack.EMPTY, entity.getItem(1));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class BulkBarrelBlockEntityTest {
         entity.setItem(1, new ItemStack(Items.DIAMOND, 16));
         entity.clearContent();
         for (int i = 0; i < entity.getContainerSize(); i++) {
-            assertEquals(ItemStack.EMPTY, entity.getItem(i));
+            assertItemStackMatches(ItemStack.EMPTY, entity.getItem(i));
         }
     }
 
@@ -131,4 +131,55 @@ public class BulkBarrelBlockEntityTest {
         assertItemStackMatches(new ItemStack(Items.DIAMOND, 8), returnedStack);
         assertItemStackMatches(new ItemStack(Items.DIAMOND, 24), entity.getItem(0));
     }
+
+    @Test
+    void takeItemsShouldReturnEmptyWhenBarrelIsEmpty() {
+        var removedStack = entity.takeItems(32);
+        assertItemStackMatches(ItemStack.EMPTY, removedStack);
+    }
+
+    @Test
+    void takeItemsShouldRemoveItemsWhenBarrelHasItems() {
+        entity.setItem(0, new ItemStack(Items.DIAMOND, 10));
+        entity.setItem(1, new ItemStack(Items.DIAMOND, 12));
+
+        var removedStack = entity.takeItems(32);
+
+        assertItemStackMatches(new ItemStack(Items.DIAMOND, 22), removedStack);
+        assertItemStackMatches(ItemStack.EMPTY, entity.getItem(0));
+        assertItemStackMatches(ItemStack.EMPTY, entity.getItem(1));
+    }
+
+    @Test
+    void takeItemsShouldNotExceedAmountWhenBarrelHasMoreItems() {
+        entity.setItem(0, new ItemStack(Items.DIAMOND, 10));
+        entity.setItem(1, new ItemStack(Items.DIAMOND, 12));
+
+        var removedStack = entity.takeItems(16);
+
+        assertItemStackMatches(new ItemStack(Items.DIAMOND, 16), removedStack);
+        assertItemStackMatches(ItemStack.EMPTY, entity.getItem(0));
+        assertItemStackMatches(new ItemStack(Items.DIAMOND, 6), entity.getItem(1));
+    }
+
+    @Test
+    void takeItemsShouldNotExceedMaxStackSizeWhenBarrelHasMultipleStacksOfItems() {
+        for (var i = 0; i < entity.getContainerSize(); i++) {
+            entity.setItem(i, new ItemStack(Items.DIAMOND, 32));
+        }
+
+        var removedStack = entity.takeItems(1000000);
+
+        assertItemStackMatches(new ItemStack(Items.DIAMOND, 64), removedStack);
+    }
+
+    @Test
+    void takeItemsShouldReturnEmptyWhenAmountIsNegative() {
+        entity.setItem(0, new ItemStack(Items.DIAMOND, 32));
+
+        var removedStack = entity.takeItems(-10);
+
+        assertItemStackMatches(ItemStack.EMPTY, removedStack);
+    }
+
 }

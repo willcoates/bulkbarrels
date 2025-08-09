@@ -26,6 +26,10 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
 
     private NonNullList<ItemStack> inventory;
 
+    /**
+     * Returns the item contained inside the barrel, or {@link Items#AIR} if the barrel is empty.
+     * @return the contained item type, or {@code AIR} if no items are present
+     */
     public Item getContainedItem() {
         for (ItemStack itemStack : inventory) {
             if (!itemStack.isEmpty()) {
@@ -34,6 +38,52 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
         }
 
         return Items.AIR;
+    }
+
+    /**
+     * Removes up to {@code amount} items from the container, returning the ItemStack containing removed items. The
+     * returned stack size will not exceed the maximum stack size for the item.
+     * @param amount Maximum number of items to remove.
+     * @return An ItemStack items removed from the container, or {@link ItemStack#EMPTY} if none were removed.
+     */
+    public ItemStack takeItems(int amount) {
+        ItemStack removed = ItemStack.EMPTY;
+
+        if (amount <= 0) {
+            return ItemStack.EMPTY;
+        }
+
+        var containedItem = getContainedItem();
+
+        if (containedItem == Items.AIR) {
+            return ItemStack.EMPTY;
+        }
+
+        amount = Math.min(amount, containedItem.getDefaultMaxStackSize());
+
+        for (int i = 0; i < inventory.size() && amount > 0; i++) {
+            var containedStack = inventory.get(i);
+            if (containedStack.isEmpty()) {
+                continue;
+            }
+
+            var toRemove = Math.min(amount, containedStack.getCount());
+
+            if (removed.isEmpty()) {
+                removed = containedStack.split(toRemove);
+            } else {
+                containedStack.shrink(toRemove);
+                removed.grow(toRemove);
+            }
+
+            amount -= toRemove;
+        }
+
+        if (!removed.isEmpty()) {
+            setChanged();
+        }
+
+        return removed;
     }
 
     @Override
