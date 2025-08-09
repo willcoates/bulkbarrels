@@ -45,6 +45,8 @@ public class BulkBarrelBlock extends BaseEntityBlock {
         if (itemStack.isEmpty()) {
             ItemStack removedItems = entity.takeItems(player.isShiftKeyDown() ? 1 : 64);
             player.getInventory().placeItemBackInInventory(removedItems);
+        } else {
+            entity.storeItems(itemStack);
         }
 
         return InteractionResult.SUCCESS;
@@ -55,7 +57,7 @@ public class BulkBarrelBlock extends BaseEntityBlock {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
-        
+
         BlockEntity baseEntity = level.getBlockEntity(blockPos);
         if (!(baseEntity instanceof BulkBarrelBlockEntity entity)) {
             return InteractionResult.FAIL;

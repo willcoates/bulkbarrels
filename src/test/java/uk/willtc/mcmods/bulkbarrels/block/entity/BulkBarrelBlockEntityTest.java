@@ -182,4 +182,52 @@ public class BulkBarrelBlockEntityTest {
         assertItemStackMatches(ItemStack.EMPTY, removedStack);
     }
 
+    @Test
+    void storeItemsShouldStoreItemsWhenBarrelIsEmpty() {
+        var stack = new ItemStack(Items.DIAMOND, 64);
+
+        entity.storeItems(stack);
+
+        assertItemStackMatches(new ItemStack(Items.DIAMOND, 64), entity.getItem(0));
+        assertItemStackMatches(ItemStack.EMPTY, stack);
+    }
+
+    @Test
+    void storeItemsShouldFillMultipleSlotsWhenAmountIsMoreThanAStack() {
+        var stack = new ItemStack(Items.DIAMOND, 100);
+
+        entity.storeItems(stack);
+
+        assertItemStackMatches(new ItemStack(Items.DIAMOND, 64), entity.getItem(0));
+        assertItemStackMatches(new ItemStack(Items.DIAMOND, 36), entity.getItem(1));
+        assertItemStackMatches(ItemStack.EMPTY, stack);
+    }
+
+    @Test
+    void storeItemsShouldNotStoreItemWhenBarrelContainsDifferentItemType() {
+        var stack = new ItemStack(Items.DIAMOND, 64);
+
+        entity.setItem(0, new ItemStack(Items.COAL, 1));
+
+        entity.storeItems(stack);
+
+        assertItemStackMatches(new ItemStack(Items.DIAMOND, 64), stack);
+        for (var i = 0; i < entity.getContainerSize(); i++) {
+            assertNotEquals(Items.DIAMOND, entity.getItem(i).getItem());
+        }
+    }
+
+    @Test
+    void storeItemsShouldNotRemoveItemsFromStackWhenTheBarrelIsFull() {
+        var stack = new ItemStack(Items.DIAMOND, 64);
+
+        for (var i = 0; i < 32; i++) {
+            entity.setItem(i * 2, new ItemStack(Items.DIAMOND, 64));
+            entity.setItem(i * 2 + 1, new ItemStack(Items.DIAMOND, 63));
+        }
+
+        entity.storeItems(stack);
+
+        assertItemStackMatches(new ItemStack(Items.DIAMOND, 32), stack);
+    }
 }

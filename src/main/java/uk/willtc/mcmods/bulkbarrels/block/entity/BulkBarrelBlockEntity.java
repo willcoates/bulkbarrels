@@ -86,6 +86,46 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
         return removed;
     }
 
+    /**
+     * Adds items from the given {@code toStore} stack into the barrel, if the barrel currently stores
+     * the same item or is empty. Removes items from {@code toStore} as they are stored.
+     * @param toStore The ItemStack containing items to add to the barrel.
+     */
+    public void storeItems(ItemStack toStore) {
+        if (toStore.isEmpty()) {
+            return;
+        }
+
+        var containedItem = getContainedItem();
+        var dirty = false;
+
+        if (!toStore.is(containedItem) && containedItem != Items.AIR) {
+            return;
+        }
+
+        for (var i = 0; i < inventory.size() && !toStore.isEmpty(); i++) {
+            var containedStack = inventory.get(i);
+
+            if (containedStack.isEmpty()) {
+                // Don't trust whoever is giving us items, assume someone will give us more than a stack of items eventually...
+                var toTransfer = Math.min(toStore.getCount(), toStore.getMaxStackSize());
+                containedStack = new ItemStack(toStore.getItem(), toTransfer);
+                toStore.shrink(toTransfer);
+                inventory.set(i, containedStack);
+                dirty = true;
+            } else {
+                var toTransfer = Math.min(toStore.getCount(), containedStack.getMaxStackSize() - containedStack.getCount());
+                toStore.shrink(toTransfer);
+                containedStack.grow(toTransfer);
+                dirty = true;
+            }
+        }
+
+        if (dirty) {
+            setChanged();
+        }
+    }
+
     @Override
     public int getContainerSize() {
         return BARREL_SLOTS;
