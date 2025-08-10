@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import uk.willtc.mcmods.bulkbarrels.BulkBarrelsBlocks;
 import uk.willtc.mcmods.bulkbarrels.Tier;
 import uk.willtc.mcmods.bulkbarrels.block.BulkBarrelBlock;
@@ -323,6 +322,37 @@ public class BulkBarrelBlockEntityTest {
 
         assertEquals(tier.slots, size);
     }
+
+    void upgradeTierShouldUpgradeTierWhenNewTierIsBetter() {
+        var barrel = createBarrel(Tier.IRON);
+        barrel.setItem(0, itemStack(Items.COAL, 64));
+
+        var upgraded = barrel.upgradeTier(Tier.GOLD);
+
+        assertTrue(upgraded);
+        assertEquals(Tier.GOLD.slots, barrel.getContainerSize());
+        assertItemStackMatches(itemStack(Items.COAL, 64), barrel.getItem(0));
+    }
+
+    void upgradeTierShouldNotMakeChangesWhenTierIsSame() {
+        var barrel = createBarrel(Tier.IRON);
+
+        var upgraded = barrel.upgradeTier(Tier.IRON);
+
+        assertFalse(upgraded);
+    }
+
+    void upgradeTierShouldNotMakeChangesWhenNewTierIsWorse() {
+        var barrel = createBarrel(Tier.IRON);
+        barrel.setItem(0, itemStack(Items.COAL, 64));
+
+        var upgraded = barrel.upgradeTier(Tier.STONE);
+
+        assertFalse(upgraded);
+        assertEquals(Tier.IRON.slots, barrel.getContainerSize());
+        assertItemStackMatches(itemStack(Items.COAL, 64), barrel.getItem(0));
+    }
+
 
     private static @NotNull ItemStack itemStack(Item item, int count) {
         return new ItemStack(item, count);

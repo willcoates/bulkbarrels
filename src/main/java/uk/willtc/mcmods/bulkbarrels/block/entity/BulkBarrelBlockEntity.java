@@ -13,9 +13,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
+import uk.willtc.mcmods.bulkbarrels.BulkBarrels;
 import uk.willtc.mcmods.bulkbarrels.BulkBarrelsBlockEntities;
 import uk.willtc.mcmods.bulkbarrels.Tier;
 import uk.willtc.mcmods.bulkbarrels.block.BulkBarrelBlock;
+
+import java.util.Collections;
 
 public class BulkBarrelBlockEntity extends BlockEntity implements Container {
     public BulkBarrelBlockEntity(BlockPos blockPos, BlockState blockState) {
@@ -128,6 +131,36 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
         }
     }
 
+    /**
+     * Attempts to upgrade the barrel's tier, increasing its capacity.
+     *
+     * @param newTier the tier to upgrade to
+     * @return {@code true} if the barrel was successfully upgraded; {@code false} otherwise
+     */
+    public boolean upgradeTier(Tier newTier) {
+        if (tier == newTier) {
+            BulkBarrels.LOGGER.warn("Detected new tier {} is same as old tier.", newTier);
+            return false;
+        }
+        if (newTier.slots < tier.slots) {
+            BulkBarrels.LOGGER.warn("Detected new tier {} is worse than old tier {}, cowarding out!", newTier, tier);
+            return false;
+        }
+        if (newTier.slots < inventory.size()) {
+            BulkBarrels.LOGGER.warn("Detected negative capacity change when upgrading from {} to {}, cowarding out!", tier, newTier);
+            return false;
+        }
+
+        tier = newTier;
+
+        var newInventory = NonNullList.withSize(newTier.slots, ItemStack.EMPTY);
+        Collections.copy(newInventory, inventory);
+        inventory = newInventory;
+        setChanged();
+
+        return true;
+    }
+
     @Override
     public int getContainerSize() {
         return inventory.size();
@@ -186,6 +219,7 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
     @Override
     public void clearContent() {
         inventory.clear();
+        setChanged();
     }
 
     @Override
