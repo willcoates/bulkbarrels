@@ -1,0 +1,119 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "bulkbarrels:bulk_barrel",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "tier": "wooden"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bulkbarrels:wooden_bulk_barrel"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "bulkbarrels:bulk_barrel",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "tier": "stone"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bulkbarrels:stone_bulk_barrel"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "bulkbarrels:bulk_barrel",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "tier": "iron"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bulkbarrels:iron_bulk_barrel"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "bulkbarrels:bulk_barrel",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "tier": "golden"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bulkbarrels:golden_bulk_barrel"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "bulkbarrels:bulk_barrel",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "tier": "diamond"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bulkbarrels:diamond_bulk_barrel"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "bulkbarrels:bulk_barrel",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "tier": "obsidian"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "bulkbarrels:obsidian_bulk_barrel"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}
