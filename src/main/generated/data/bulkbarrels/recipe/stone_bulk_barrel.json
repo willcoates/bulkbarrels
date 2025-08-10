@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "bulk_barrels",
+  "key": {
+    "b": "bulkbarrels:wooden_bulk_barrel",
+    "u": "minecraft:stone"
+  },
+  "pattern": [
+    "uuu",
+    "ubu",
+    "uuu"
+  ],
+  "result": {
+    "count": 1,
+    "id": "bulkbarrels:stone_bulk_barrel"
+  }
+}

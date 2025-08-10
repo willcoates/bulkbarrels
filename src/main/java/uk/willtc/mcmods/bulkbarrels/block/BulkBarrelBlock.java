@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.willtc.mcmods.bulkbarrels.Tier;
 import uk.willtc.mcmods.bulkbarrels.block.entity.BulkBarrelBlockEntity;
+import uk.willtc.mcmods.bulkbarrels.item.TieredBlockItem;
 
 public class BulkBarrelBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
@@ -51,9 +52,16 @@ public class BulkBarrelBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
+        var item = blockPlaceContext.getItemInHand().getItem();
+        var tier = Tier.WOODEN;
+
+        if (item instanceof TieredBlockItem tieredBlockItem) {
+            tier = tieredBlockItem.getTier();
+        }
+
         return this.defaultBlockState()
                 .setValue(FACING, blockPlaceContext.getHorizontalDirection().getOpposite())
-                .setValue(TIER, Tier.WOODEN);
+                .setValue(TIER, tier);
     }
 
     @Override

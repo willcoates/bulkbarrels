@@ -11,7 +11,7 @@
     "B": "minecraft:barrel"
   },
   "result": {
-    "id": "bulkbarrels:bulk_barrel",
+    "id": "bulkbarrels:wooden_bulk_barrel",
     "count": 1
   }
 }

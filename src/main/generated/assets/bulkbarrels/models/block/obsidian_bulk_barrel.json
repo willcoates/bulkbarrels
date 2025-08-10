@@ -1,0 +1,9 @@
+{
+  "parent": "bulkbarrels:block/base_bulk_barrel",
+  "textures": {
+    "back": "bulkbarrels:block/obsidian_bulk_barrel_back",
+    "edge": "bulkbarrels:block/obsidian_bulk_barrel_edge",
+    "front": "bulkbarrels:block/obsidian_bulk_barrel_front",
+    "particle": "bulkbarrels:block/obsidian_bulk_barrel_front"
+  }
+}

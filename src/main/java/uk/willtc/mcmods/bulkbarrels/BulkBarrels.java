@@ -12,8 +12,8 @@ public class BulkBarrels implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        BulkBarrelsItems.initialize();
         BulkBarrelsBlocks.initialize();
         BulkBarrelsBlockEntities.initialize();
+        BulkBarrelsItems.initialize();
     }
 }

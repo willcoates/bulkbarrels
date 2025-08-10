@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "facing=east,tier=diamond": {
+      "model": "bulkbarrels:block/diamond_bulk_barrel",
+      "y": 90
+    },
+    "facing=east,tier=golden": {
+      "model": "bulkbarrels:block/golden_bulk_barrel",
+      "y": 90
+    },
+    "facing=east,tier=iron": {
+      "model": "bulkbarrels:block/iron_bulk_barrel",
+      "y": 90
+    },
+    "facing=east,tier=obsidian": {
+      "model": "bulkbarrels:block/obsidian_bulk_barrel",
+      "y": 90
+    },
+    "facing=east,tier=stone": {
+      "model": "bulkbarrels:block/stone_bulk_barrel",
+      "y": 90
+    },
+    "facing=east,tier=wooden": {
+      "model": "bulkbarrels:block/wooden_bulk_barrel",
+      "y": 90
+    },
+    "facing=north,tier=diamond": {
+      "model": "bulkbarrels:block/diamond_bulk_barrel"
+    },
+    "facing=north,tier=golden": {
+      "model": "bulkbarrels:block/golden_bulk_barrel"
+    },
+    "facing=north,tier=iron": {
+      "model": "bulkbarrels:block/iron_bulk_barrel"
+    },
+    "facing=north,tier=obsidian": {
+      "model": "bulkbarrels:block/obsidian_bulk_barrel"
+    },
+    "facing=north,tier=stone": {
+      "model": "bulkbarrels:block/stone_bulk_barrel"
+    },
+    "facing=north,tier=wooden": {
+      "model": "bulkbarrels:block/wooden_bulk_barrel"
+    },
+    "facing=south,tier=diamond": {
+      "model": "bulkbarrels:block/diamond_bulk_barrel",
+      "y": 180
+    },
+    "facing=south,tier=golden": {
+      "model": "bulkbarrels:block/golden_bulk_barrel",
+      "y": 180
+    },
+    "facing=south,tier=iron": {
+      "model": "bulkbarrels:block/iron_bulk_barrel",
+      "y": 180
+    },
+    "facing=south,tier=obsidian": {
+      "model": "bulkbarrels:block/obsidian_bulk_barrel",
+      "y": 180
+    },
+    "facing=south,tier=stone": {
+      "model": "bulkbarrels:block/stone_bulk_barrel",
+      "y": 180
+    },
+    "facing=south,tier=wooden": {
+      "model": "bulkbarrels:block/wooden_bulk_barrel",
+      "y": 180
+    },
+    "facing=west,tier=diamond": {
+      "model": "bulkbarrels:block/diamond_bulk_barrel",
+      "y": 270
+    },
+    "facing=west,tier=golden": {
+      "model": "bulkbarrels:block/golden_bulk_barrel",
+      "y": 270
+    },
+    "facing=west,tier=iron": {
+      "model": "bulkbarrels:block/iron_bulk_barrel",
+      "y": 270
+    },
+    "facing=west,tier=obsidian": {
+      "model": "bulkbarrels:block/obsidian_bulk_barrel",
+      "y": 270
+    },
+    "facing=west,tier=stone": {
+      "model": "bulkbarrels:block/stone_bulk_barrel",
+      "y": 270
+    },
+    "facing=west,tier=wooden": {
+      "model": "bulkbarrels:block/wooden_bulk_barrel",
+      "y": 270
+    }
+  }
+}

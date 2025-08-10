@@ -1,0 +1,11 @@
+// 1.21.8	-999999999-01-01T00:00:00	Bulk Barrels/Bulk Barrels Upgrade Recipes
+1f9db5069f3202af427884239cece94692f88b46 data/bulkbarrels/advancement/recipes/redstone/diamond_bulk_barrel.json
+5ba929024a6e5c7249644be3853eb66703ecadbe data/bulkbarrels/advancement/recipes/redstone/golden_bulk_barrel.json
+c3937efeb6564d4313c680e22552f9be3ddc3074 data/bulkbarrels/advancement/recipes/redstone/iron_bulk_barrel.json
+29a0951327093305c513ae7e4f76992eca1a7289 data/bulkbarrels/advancement/recipes/redstone/obsidian_bulk_barrel.json
+54720116daa4a81845f55788e6f9b9a95128298d data/bulkbarrels/advancement/recipes/redstone/stone_bulk_barrel.json
+461314394d597ae396067a99bbb30165beacf4f5 data/bulkbarrels/recipe/diamond_bulk_barrel.json
+e7961242fe158cc46e4de168f5256398b23dde8a data/bulkbarrels/recipe/golden_bulk_barrel.json
+73bed98ca83740f30994c73938735632c56c6262 data/bulkbarrels/recipe/iron_bulk_barrel.json
+688d84f057b3164daded6e2ab749a463eb70529f data/bulkbarrels/recipe/obsidian_bulk_barrel.json
+0319ac483b326b9a3480c41c6bf5d670d2ac19c9 data/bulkbarrels/recipe/stone_bulk_barrel.json

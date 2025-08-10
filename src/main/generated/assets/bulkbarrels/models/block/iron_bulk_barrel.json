@@ -1,0 +1,9 @@
+{
+  "parent": "bulkbarrels:block/base_bulk_barrel",
+  "textures": {
+    "back": "bulkbarrels:block/iron_bulk_barrel_back",
+    "edge": "bulkbarrels:block/iron_bulk_barrel_edge",
+    "front": "bulkbarrels:block/iron_bulk_barrel_front",
+    "particle": "bulkbarrels:block/iron_bulk_barrel_front"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "bulkbarrels:block/base_bulk_barrel",
+  "textures": {
+    "back": "bulkbarrels:block/diamond_bulk_barrel_back",
+    "edge": "bulkbarrels:block/diamond_bulk_barrel_edge",
+    "front": "bulkbarrels:block/diamond_bulk_barrel_front",
+    "particle": "bulkbarrels:block/diamond_bulk_barrel_front"
+  }
+}
