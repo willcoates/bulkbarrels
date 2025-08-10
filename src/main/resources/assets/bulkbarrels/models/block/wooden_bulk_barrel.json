@@ -1,0 +1,26 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "bulkbarrels:block/wooden_bulk_barrel_front",
+    "up": "bulkbarrels:block/wooden_bulk_barrel_side",
+    "down": "bulkbarrels:block/wooden_bulk_barrel_side",
+    "east": "bulkbarrels:block/wooden_bulk_barrel_side",
+    "west": "bulkbarrels:block/wooden_bulk_barrel_side",
+    "north": "bulkbarrels:block/wooden_bulk_barrel_front",
+    "south": "bulkbarrels:block/wooden_bulk_barrel_back"
+  },
+  "elements": [
+    {
+      "from": [ 0, 0, 0 ],
+      "to": [ 16, 16, 16 ],
+      "faces": {
+        "down":  { "texture": "#down", "cullface": "down", "rotation":  90 },
+        "up":    { "texture": "#up", "cullface": "up", "rotation": 90 },
+        "north": { "texture": "#north", "cullface": "north" },
+        "south": { "texture": "#south", "cullface": "south" },
+        "west":  { "texture": "#west", "cullface": "west" },
+        "east":  { "texture": "#east", "cullface": "east"   }
+      }
+    }
+  ]
+}

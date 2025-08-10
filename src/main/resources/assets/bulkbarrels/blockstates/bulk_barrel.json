@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "tier=wooden,facing=north": { "model": "bulkbarrels:block/wooden_bulk_barrel" },
+    "tier=wooden,facing=east":  { "model": "bulkbarrels:block/wooden_bulk_barrel", "y": 90 },
+    "tier=wooden,facing=south": { "model": "bulkbarrels:block/wooden_bulk_barrel", "y": 180 },
+    "tier=wooden,facing=west":  { "model": "bulkbarrels:block/wooden_bulk_barrel", "y": 270 },
+    "tier=stone,facing=north": { "model": "bulkbarrels:block/wooden_bulk_barrel" },
+    "tier=stone,facing=east":  { "model": "bulkbarrels:block/wooden_bulk_barrel", "y": 90 },
+    "tier=stone,facing=south": { "model": "bulkbarrels:block/wooden_bulk_barrel", "y": 180 },
+    "tier=stone,facing=west":  { "model": "bulkbarrels:block/wooden_bulk_barrel", "y": 270 }
+  }
+}
