@@ -15,8 +15,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import uk.willtc.mcmods.bulkbarrels.BulkBarrelsBlocks;
 import uk.willtc.mcmods.bulkbarrels.Tier;
 import uk.willtc.mcmods.bulkbarrels.block.BulkBarrelBlock;
@@ -309,6 +312,16 @@ public class BulkBarrelBlockEntityTest {
 
         assertItemStackMatches(itemStackWithDamage(Items.DIAMOND, 16, 1), barrel.getItem(0));
         assertItemStackMatches(itemStackWithDamage(Items.DIAMOND, 16, 2), barrel.getItem(1));
+    }
+
+    @ParameterizedTest
+    @EnumSource(Tier.class)
+    void getContainerSizeShouldIncreaseInSizeWhenTierIsHigher(Tier tier) {
+        var barrel = createBarrel(tier);
+
+        var size = barrel.getContainerSize();
+
+        assertEquals(tier.slots, size);
     }
 
     private static @NotNull ItemStack itemStack(Item item, int count) {

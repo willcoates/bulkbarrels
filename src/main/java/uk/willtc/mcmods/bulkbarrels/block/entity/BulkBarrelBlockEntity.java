@@ -14,15 +14,18 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import uk.willtc.mcmods.bulkbarrels.BulkBarrelsBlockEntities;
+import uk.willtc.mcmods.bulkbarrels.Tier;
+import uk.willtc.mcmods.bulkbarrels.block.BulkBarrelBlock;
 
 public class BulkBarrelBlockEntity extends BlockEntity implements Container {
-    private static final int BARREL_SLOTS = 64; // TODO: Load this from an enum in BlockState
-
     public BulkBarrelBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(BulkBarrelsBlockEntities.BULK_BARREL_BLOCK_ENTITY, blockPos, blockState);
 
-        inventory = NonNullList.withSize(BARREL_SLOTS, ItemStack.EMPTY);
+        tier = blockState.getOptionalValue(BulkBarrelBlock.TIER).orElse(Tier.WOODEN);
+        inventory = NonNullList.withSize(tier.slots, ItemStack.EMPTY);
     }
+
+    private Tier tier;
 
     private NonNullList<ItemStack> inventory;
 
@@ -127,7 +130,7 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
 
     @Override
     public int getContainerSize() {
-        return BARREL_SLOTS;
+        return inventory.size();
     }
 
     @Override
