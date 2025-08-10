@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PSP",
+    "PBP",
+    "PSP"
+  ],
+  "key": {
+    "P": "#minecraft:planks",
+    "S": "#minecraft:wooden_slabs",
+    "B": "minecraft:barrel"
+  },
+  "result": {
+    "id": "bulkbarrels:bulk_barrel",
+    "count": 1
+  }
+}
