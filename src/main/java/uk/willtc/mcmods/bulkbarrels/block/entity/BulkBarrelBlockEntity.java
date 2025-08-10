@@ -47,18 +47,16 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
      * @return An ItemStack items removed from the container, or {@link ItemStack#EMPTY} if none were removed.
      */
     public ItemStack takeItems(int amount) {
-        ItemStack removed = ItemStack.EMPTY;
-
         if (amount <= 0) {
             return ItemStack.EMPTY;
         }
 
         var containedItem = getContainedItem();
-
         if (containedItem == Items.AIR) {
             return ItemStack.EMPTY;
         }
 
+        ItemStack removed = ItemStack.EMPTY;
         amount = Math.min(amount, containedItem.getDefaultMaxStackSize());
 
         for (int i = 0; i < inventory.size() && amount > 0; i++) {
@@ -71,9 +69,11 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
 
             if (removed.isEmpty()) {
                 removed = containedStack.split(toRemove);
-            } else {
+            } else if (ItemStack.isSameItemSameComponents(containedStack, removed)) {
                 containedStack.shrink(toRemove);
                 removed.grow(toRemove);
+            } else {
+                continue;
             }
 
             amount -= toRemove;
@@ -109,11 +109,10 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
             if (containedStack.isEmpty()) {
                 // Don't trust whoever is giving us items, assume someone will give us more than a stack of items eventually...
                 var toTransfer = Math.min(toStore.getCount(), toStore.getMaxStackSize());
-                containedStack = new ItemStack(toStore.getItem(), toTransfer);
-                toStore.shrink(toTransfer);
+                containedStack = toStore.split(toTransfer);
                 inventory.set(i, containedStack);
                 dirty = true;
-            } else {
+            } else if (ItemStack.isSameItemSameComponents(toStore, containedStack)) {
                 var toTransfer = Math.min(toStore.getCount(), containedStack.getMaxStackSize() - containedStack.getCount());
                 toStore.shrink(toTransfer);
                 containedStack.grow(toTransfer);
