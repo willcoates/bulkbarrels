@@ -8,6 +8,7 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.renderer.block.model.*;
@@ -65,5 +66,12 @@ public class BarrelModelGenerator extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerator) {
+
+        for (var tier : Tier.values()) {
+            var upgradeItem = BulkBarrelsItems.TIERED_UPGRADE_ITEMS.get(tier);
+            if (upgradeItem != null) {
+                itemModelGenerator.generateFlatItem(upgradeItem, ModelTemplates.FLAT_ITEM);
+            }
+        }
     }
 }

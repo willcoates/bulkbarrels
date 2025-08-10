@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "bulkbarrels:item/diamond_barrel_upgrade"
+  }
+}
