@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import uk.willtc.mcmods.bulkbarrels.Tier;
 import uk.willtc.mcmods.bulkbarrels.block.entity.BulkBarrelBlockEntity;
+import uk.willtc.mcmods.bulkbarrels.item.TierUpgradeItem;
 import uk.willtc.mcmods.bulkbarrels.item.TieredBlockItem;
 
 public class BulkBarrelBlock extends BaseEntityBlock {
@@ -85,14 +86,31 @@ public class BulkBarrelBlock extends BaseEntityBlock {
             return InteractionResult.FAIL;
         }
 
-        if (itemStack.isEmpty()) {
+        if (!itemStack.isEmpty()) {
+            if (itemStack.getItem() instanceof TierUpgradeItem upgrade) {
+                doUpgrade(upgrade, blockState, entity, level, blockPos, itemStack);
+            } else {
+                entity.storeItems(itemStack);
+            }
+        } else {
+            // TODO: Determine how we want to take all items of type from the player inventory
             ItemStack removedItems = entity.takeItems(player.isShiftKeyDown() ? 1 : 64);
             player.getInventory().placeItemBackInInventory(removedItems);
-        } else {
-            entity.storeItems(itemStack);
         }
 
         return InteractionResult.SUCCESS;
+    }
+
+    private void doUpgrade(TierUpgradeItem upgrade, BlockState blockState, BulkBarrelBlockEntity entity, Level level, BlockPos blockPos, ItemStack itemStack) {
+        var currentTier = blockState.getValueOrElse(TIER, Tier.WOODEN);
+        if (!upgrade.isUsableOnTier(currentTier)) {
+            return;
+        }
+
+        if (entity.upgradeTier(upgrade.getTargetTier())) {
+            level.setBlock(blockPos, blockState.setValue(TIER, upgrade.getTargetTier()), Block.UPDATE_ALL);
+            itemStack.shrink(1);
+        }
     }
 
     @Override
