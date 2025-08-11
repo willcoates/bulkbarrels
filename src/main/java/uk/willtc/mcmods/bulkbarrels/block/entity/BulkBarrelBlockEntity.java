@@ -3,10 +3,13 @@ package uk.willtc.mcmods.bulkbarrels.block.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
@@ -35,14 +39,20 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
     }
 
     private Tier tier;
-
     private NonNullList<ItemStack> inventory;
+
+    private Item containedItem = Items.AIR;
+    private int itemCount = 0;
 
     /**
      * Returns the item contained inside the barrel, or {@link Items#AIR} if the barrel is empty.
      * @return the contained item type, or {@code AIR} if no items are present
      */
     public Item getContainedItem() {
+        if (level != null && level.isClientSide) {
+            return containedItem;
+        }
+
         for (ItemStack itemStack : inventory) {
             if (!itemStack.isEmpty()) {
                 return itemStack.getItem();
@@ -173,6 +183,10 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
      * @return the total count of items in the barrel's inventory
      */
     public int getItemCount() {
+        if (level != null && level.isClientSide) {
+            return itemCount;
+        }
+
         int sum = 0;
         for (ItemStack itemStack : inventory) {
             sum += itemStack.getCount();
@@ -250,6 +264,14 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
     @Override
     protected void loadAdditional(ValueInput valueInput) {
         super.loadAdditional(valueInput);
+        var itemCount = valueInput.getInt("itemCount");
+        var containedItem  = valueInput.getString("containedItem");
+        if (itemCount.isPresent() && containedItem.isPresent()) {
+            this.itemCount = itemCount.get();
+            this.containedItem = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(containedItem.get()));
+            return;
+        }
+
         inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(valueInput, inventory);
     }
@@ -265,7 +287,10 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
 
     @Override
     public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-        return saveWithoutMetadata(provider);
+        var compound = new CompoundTag();
+        compound.putInt("itemCount", getItemCount());
+        compound.putString("containedItem", getContainedItem().toString());
+        return compound;
     }
 
     @Override
