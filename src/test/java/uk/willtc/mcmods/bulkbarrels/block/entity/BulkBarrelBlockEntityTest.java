@@ -323,6 +323,7 @@ public class BulkBarrelBlockEntityTest {
         assertEquals(tier.slots, size);
     }
 
+    @Test
     void upgradeTierShouldUpgradeTierWhenNewTierIsBetter() {
         var barrel = createBarrel(Tier.IRON);
         barrel.setItem(0, itemStack(Items.COAL, 64));
@@ -334,6 +335,7 @@ public class BulkBarrelBlockEntityTest {
         assertItemStackMatches(itemStack(Items.COAL, 64), barrel.getItem(0));
     }
 
+    @Test
     void upgradeTierShouldNotMakeChangesWhenTierIsSame() {
         var barrel = createBarrel(Tier.IRON);
 
@@ -342,6 +344,7 @@ public class BulkBarrelBlockEntityTest {
         assertFalse(upgraded);
     }
 
+    @Test
     void upgradeTierShouldNotMakeChangesWhenNewTierIsWorse() {
         var barrel = createBarrel(Tier.IRON);
         barrel.setItem(0, itemStack(Items.COAL, 64));
@@ -353,6 +356,21 @@ public class BulkBarrelBlockEntityTest {
         assertItemStackMatches(itemStack(Items.COAL, 64), barrel.getItem(0));
     }
 
+    @Test
+    void getItemCountShouldReturn0WhenBarrelIsEmpty() {
+        var barrel = createBarrel();
+        assertEquals(0, barrel.getItemCount());
+    }
+
+
+    @Test
+    void getItemCountShouldSumStacksWhenBarrelHasItems() {
+        var barrel = createBarrel();
+        barrel.setItem(0, itemStack(Items.DIAMOND, 32));
+        barrel.setItem(2, itemStack(Items.DIAMOND, 50));
+
+        assertEquals(82, barrel.getItemCount());
+    }
 
     private static @NotNull ItemStack itemStack(Item item, int count) {
         return new ItemStack(item, count);

@@ -1,7 +1,9 @@
 package uk.willtc.mcmods.bulkbarrels.block.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
@@ -161,6 +163,19 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
         return true;
     }
 
+    /**
+     * Returns the total number of items stored in the barrel.
+     *
+     * @return the total count of items in the barrel's inventory
+     */
+    public int getItemCount() {
+        int sum = 0;
+        for (ItemStack itemStack : inventory) {
+            sum += itemStack.getCount();
+        }
+        return sum;
+    }
+
     @Override
     public int getContainerSize() {
         return inventory.size();
@@ -233,5 +248,10 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
         super.loadAdditional(valueInput);
         inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(valueInput, inventory);
+    }
+
+    @Override
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+        return saveWithoutMetadata(provider);
     }
 }
