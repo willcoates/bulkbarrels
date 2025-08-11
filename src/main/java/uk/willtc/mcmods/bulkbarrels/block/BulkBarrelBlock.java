@@ -77,6 +77,10 @@ public class BulkBarrelBlock extends BaseEntityBlock {
 
     @Override
     protected @NotNull InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
+
         BlockEntity baseEntity = level.getBlockEntity(blockPos);
         if (!(baseEntity instanceof BulkBarrelBlockEntity entity)) {
             return InteractionResult.FAIL;
@@ -111,6 +115,10 @@ public class BulkBarrelBlock extends BaseEntityBlock {
 
     @Override
     protected @NotNull InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
+
         BlockEntity baseEntity = level.getBlockEntity(blockPos);
         if (!(baseEntity instanceof BulkBarrelBlockEntity entity)) {
             return InteractionResult.FAIL;
@@ -120,6 +128,6 @@ public class BulkBarrelBlock extends BaseEntityBlock {
         ItemEntity droppedItemEntity = new ItemEntity(level, blockPos.getX(), blockPos.getY(), blockPos.getZ(), removedItems);
         level.addFreshEntity(droppedItemEntity);
 
-        return InteractionResult.PASS;
+        return InteractionResult.SUCCESS;
     }
 }

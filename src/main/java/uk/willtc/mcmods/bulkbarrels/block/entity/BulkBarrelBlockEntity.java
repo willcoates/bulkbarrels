@@ -4,6 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
@@ -15,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import uk.willtc.mcmods.bulkbarrels.BulkBarrels;
 import uk.willtc.mcmods.bulkbarrels.BulkBarrelsBlockEntities;
 import uk.willtc.mcmods.bulkbarrels.Tier;
@@ -250,8 +254,22 @@ public class BulkBarrelBlockEntity extends BlockEntity implements Container {
         ContainerHelper.loadAllItems(valueInput, inventory);
     }
 
+    // I don't like this, but it works for now
+    @Override
+    public void setChanged() {
+        super.setChanged();
+        if (level != null && !level.isClientSide) {
+            level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), BulkBarrelBlock.UPDATE_CLIENTS);
+        }
+    }
+
     @Override
     public @NotNull CompoundTag getUpdateTag(HolderLookup.Provider provider) {
         return saveWithoutMetadata(provider);
+    }
+
+    @Override
+    public @Nullable Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 }
