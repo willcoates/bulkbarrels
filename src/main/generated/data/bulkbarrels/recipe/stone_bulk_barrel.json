@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "redstone",
+  "category": "misc",
   "group": "bulk_barrels",
   "key": {
     "b": "bulkbarrels:wooden_bulk_barrel",

@@ -3,16 +3,16 @@
   "category": "misc",
   "group": "bulk_barrels",
   "key": {
-    "b": "bulkbarrels:stone_bulk_barrel",
-    "u": "minecraft:iron_ingot"
+    "f": "bulkbarrels:barrel_frame",
+    "u": "minecraft:diamond"
   },
   "pattern": [
     "uuu",
-    "ubu",
+    "ufu",
     "uuu"
   ],
   "result": {
     "count": 1,
-    "id": "bulkbarrels:iron_bulk_barrel"
+    "id": "bulkbarrels:diamond_barrel_upgrade"
   }
 }

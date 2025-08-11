@@ -17,6 +17,7 @@ import java.util.function.Function;
 public class BulkBarrelsItems {
     public static final Map<Tier, BlockItem> TIERED_BULK_BARRELS = new HashMap<>();
     public static final Map<Tier, TierUpgradeItem> TIERED_UPGRADE_ITEMS = new HashMap<>();
+    public static final Item BARREL_FRAME = register("barrel_frame", Item::new, new Item.Properties());
 
     public static void initialize() {
         var tiers = Tier.values();

@@ -28,9 +28,10 @@ public class BarrelUpgradeRecipeGenerator extends FabricRecipeProvider {
                     var currentTier = tiers[i];
                     var previousBarrel = BulkBarrelsItems.TIERED_BULK_BARRELS.get(previousTier);
                     var currentBarrel = BulkBarrelsItems.TIERED_BULK_BARRELS.get(currentTier);
+                    var currentUpgrade = BulkBarrelsItems.TIERED_UPGRADE_ITEMS.get(currentTier);
 
                     // Upgrade barrel block
-                    shaped(RecipeCategory.REDSTONE, currentBarrel)
+                    shaped(RecipeCategory.MISC, currentBarrel)
                             .pattern("uuu")
                             .pattern("ubu")
                             .pattern("uuu")
@@ -40,7 +41,16 @@ public class BarrelUpgradeRecipeGenerator extends FabricRecipeProvider {
                             .group("bulk_barrels")
                             .save(recipeOutput);
 
-                    // TODO: Upgrade item
+                    // Upgrade barrel item
+                    shaped(RecipeCategory.MISC, currentUpgrade)
+                            .pattern("uuu")
+                            .pattern("ufu")
+                            .pattern("uuu")
+                            .define('u', currentTier.craftItem)
+                            .define('f', BulkBarrelsItems.BARREL_FRAME)
+                            .unlockedBy("has_previous_barrel", has(previousBarrel))
+                            .group("bulk_barrels")
+                            .save(recipeOutput);
                 }
             }
         };
